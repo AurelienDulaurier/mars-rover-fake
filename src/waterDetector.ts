@@ -1,6 +1,6 @@
 export class WaterDetector {
-    findWater() {
+    static findWater() {
 //        This use real sensor, not available in unit test
-        return false;
+        throw new Error("water sensor is not responding")
     }
 }

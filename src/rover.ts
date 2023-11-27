@@ -5,12 +5,8 @@ import {Coordinates} from "./coordinates";
 
 export class Rover {
     public readonly coordinates: Coordinates;
-    private readonly _waterDetector: WaterDetector;
-    private readonly _reportSender: DeepNetworkSpaceReportSender;
 
-    constructor(coordinate: Coordinates, waterDetector: WaterDetector, reportSender: DeepNetworkSpaceReportSender) {
-        this._waterDetector = waterDetector;
-        this._reportSender = reportSender;
+    constructor(coordinate: Coordinates) {
         this.coordinates = coordinate;
     }
 
@@ -19,19 +15,19 @@ export class Rover {
 
         switch (this.coordinates.direction._direction) {
             case Directions.NORTH:
-                return new Rover(this.coordinates.YTranslate(), this._waterDetector, this._reportSender)
+                return new Rover(this.coordinates.YTranslate())
             case Directions.SOUTH:
-                return new Rover(this.coordinates.YAntiTranslate(), this._waterDetector, this._reportSender)
+                return new Rover(this.coordinates.YAntiTranslate())
             case Directions.WEST:
-                return new Rover(this.coordinates.XTranslate(), this._waterDetector, this._reportSender)
+                return new Rover(this.coordinates.XTranslate())
             case Directions.EAST:
-                return new Rover(this.coordinates.XAntiTranslate(), this._waterDetector, this._reportSender)
+                return new Rover(this.coordinates.XAntiTranslate())
         }
     }
 
     private checkWater() {
-        if (this._waterDetector.findWater())
-            this._reportSender.send(this.coordinates);
+        if (WaterDetector.findWater())
+            DeepNetworkSpaceReportSender.send(this.coordinates);
     }
 
     back() {
@@ -39,21 +35,21 @@ export class Rover {
 
         switch (this.coordinates.direction._direction) {
             case Directions.NORTH:
-                return new Rover(this.coordinates.YAntiTranslate(), this._waterDetector, this._reportSender)
+                return new Rover(this.coordinates.YAntiTranslate())
             case Directions.SOUTH:
-                return new Rover(this.coordinates.YTranslate(), this._waterDetector, this._reportSender)
+                return new Rover(this.coordinates.YTranslate())
             case Directions.WEST:
-                return new Rover(this.coordinates.XAntiTranslate(), this._waterDetector, this._reportSender)
+                return new Rover(this.coordinates.XAntiTranslate())
             case Directions.EAST:
-                return new Rover(this.coordinates.XTranslate(), this._waterDetector, this._reportSender)
+                return new Rover(this.coordinates.XTranslate())
         }
     }
 
     rotate() {
-        return new Rover(this.coordinates.rotate(), this._waterDetector, this._reportSender);
+        return new Rover(this.coordinates.rotate());
     }
 
     antiRotate() {
-        return new Rover(this.coordinates.antiRotate(), this._waterDetector, this._reportSender);
+        return new Rover(this.coordinates.antiRotate());
     }
 }
