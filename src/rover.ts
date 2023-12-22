@@ -25,7 +25,7 @@ export class Rover {
         }
     }
 
-    private checkWater() {
+    private checkWater(): void {
         if (WaterDetector.findWater())
             DeepNetworkSpaceReportSender.send(this.coordinates);
     }
